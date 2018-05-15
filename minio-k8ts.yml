@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio
+  namespace: denismakogon-minio-cluster
+  labels:
+    app: minio
+spec:
+  clusterIP: None
+  ports:
+    - port: 9000
+      name: minio
+  selector:
+    app: minio
+---
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: minio
+  namespace: denismakogon-minio-cluster
+spec:
+  serviceName: minio
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: minio
+    spec:
+      containers:
+      - name: minio
+        env:
+        - name: MINIO_ACCESS_KEY
+          value: "admin"
+        - name: MINIO_SECRET_KEY
+          value: "password"
+        image: minio/minio
+        args:
+        - server
+        - http://minio-0.minio.denismakogon-minio-cluster.svc.cluster.local/data
+        - http://minio-1.minio.denismakogon-minio-cluster.svc.cluster.local/data
+        - http://minio-2.minio.denismakogon-minio-cluster.svc.cluster.local/data
+        - http://minio-3.minio.denismakogon-minio-cluster.svc.cluster.local/data
+        ports:
+        - containerPort: 9000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio-service
+  namespace: denismakogon-minio-cluster
+  annotations:
+    service.beta.kubernetes.io/oci-load-balancer-shape: "400Mbps"
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 9000
+      targetPort: 9000
+      protocol: TCP
+  selector:
+    app: minio

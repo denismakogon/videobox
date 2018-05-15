@@ -1,0 +1,11 @@
+name: frame-splitter
+version: 0.0.31
+runtime: go
+entrypoint: ./func
+type: async
+memory: 1000
+format: json
+timeout: 3600
+config:
+  BUCKET_DAEMON_FUNC: /bucket-daemon
+  NEXT_FUNC: /object-detect

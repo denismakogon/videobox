@@ -1,0 +1,11 @@
+tunnels:
+
+  fn-api:
+    proto: https
+    addr: 8080
+    subdomain: fn
+
+  s3-minio:
+    proto: https
+    addr: 9090
+    subdomain: s3

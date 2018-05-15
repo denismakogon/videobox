@@ -1,0 +1,10 @@
+name: segments-assembler
+version: 0.0.4
+runtime: go
+entrypoint: ./func
+type: async
+memory: 512
+format: json
+timeout: 3600
+config:
+  NEXT_FUNC: /bucket-cleaner

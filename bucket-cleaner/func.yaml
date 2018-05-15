@@ -1,0 +1,9 @@
+name: bucket-cleaner
+version: 0.0.3
+runtime: go
+entrypoint: ./func
+type: async
+memory: 258
+format: json
+timeout: 360
+path: /bucket-cleaner

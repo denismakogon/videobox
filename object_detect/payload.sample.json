@@ -1,0 +1,13 @@
+{
+  "frames": [
+          {
+              "get_object_url": "https://...",
+              "put_object_url": "https://...",
+              "del_object_url": "https://...",
+              "is_last": false
+          }
+     ],
+  "bucket": "s3-bucket",
+  "range_index": 10,
+  "video_segment_url": "https://..."
+}

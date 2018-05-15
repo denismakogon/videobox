@@ -1,0 +1,14 @@
+{
+  "batch_object_delete_urls": [
+    "https://..."
+  ],
+  "batch_object_get_urls": [
+    "https://..."
+  ],
+  "range_index": 10,
+  "video_segment_url": "https://...",
+  "dimensions": {
+    "height": 720,
+    "width": 1280
+  }
+}

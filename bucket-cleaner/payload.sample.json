@@ -1,0 +1,4 @@
+{
+  "s3_endpoint": "s3://admin:password@s3.com/us-east-1/videobox",
+  "bucket": "9f3d477d-18b7-43d4-88e6-57eeabbebe74"
+}
