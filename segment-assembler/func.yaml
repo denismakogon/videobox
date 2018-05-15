@@ -1,5 +1,5 @@
 name: segment-assembler
-version: 0.0.19
+version: 0.0.20
 runtime: python
 entrypoint: python3 func.py
 type: async

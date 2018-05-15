@@ -17,7 +17,7 @@ Operations:
 Deployment command:
 
 ```bash
-fn routes create videobox /frame-splitter --image $FN_REGISTRY/frame-splitter:0.0.21 --format json --type async --timeout 3600 --idle-timeout 10 --memory 1000
+fn routes create videobox /frame-splitter --image $FN_REGISTRY/frame-splitter:0.0.32 --format json --type async --timeout 3600 --idle-timeout 10 --memory 1000
 fn routes config set videobox /frame-splitter NEXT_FUNC /object-detect
 ```
 
@@ -33,7 +33,7 @@ Operations:
 Deployment command:
 
 ```bash
-fn routes create videobox /object-detect --image $FN_REGISTRY/object_detect:0.0.9 --format json --type async --timeout 3000 --idle-timeout 30 --memory 400
+fn routes create videobox /object-detect --image $FN_REGISTRY/object_detect:0.0.10 --format json --type async --timeout 3000 --idle-timeout 30 --memory 400
 fn routes config set videobox /object_detect DETECT_PRECISION 0.4
 fn routes config set videobox /object-detect NEXT_FUNC /segment-assembler
 ```
@@ -51,7 +51,7 @@ Operations:
 Deployment command:
 
 ```bash
-fn routes create videobox /segment-assembler --image $FN_REGISTRY/segment-assembler:0.0.19 --format json --type async --timeout 30 --idle-timeout 20 --memory 400
+fn routes create videobox /segment-assembler --image $FN_REGISTRY/segment-assembler:0.0.20 --format json --type async --timeout 30 --idle-timeout 20 --memory 400
 ```
 
 ### Bucket daemon
@@ -67,7 +67,7 @@ Operations:
 Deployment command:
 
 ```bash
-fn routes create videobox /bucket-daemon --image $FN_REGISTRY/bucket-daemon:0.0.3 --format json --type async --timeout 50 --idle-timeout 10 --memory 256
+fn routes create videobox /bucket-daemon --image $FN_REGISTRY/bucket-daemon:0.0.4 --format json --type async --timeout 50 --idle-timeout 10 --memory 256
 fn routes config set videobox /bucket-daemon NEXT_FUNC /segments-assembler
 fn routes config set videobox /bucket-daemon BACKOFF_TIME 5
 ```
@@ -84,7 +84,7 @@ Operations:
 Deployment command:
 
 ```bash
-fn routes create videobox /segments-assembler --image $FN_REGISTRY/segments-assembler:0.0.4 --format json --type async --timeout 3600 --idle-timeout 20 --memory 512
+fn routes create videobox /segments-assembler --image $FN_REGISTRY/segments-assembler:0.0.5 --format json --type async --timeout 3600 --idle-timeout 20 --memory 512
 fn routes config set videobox /segments-assembler NEXT_FUNC /bucket-cleaner
 ```
 
@@ -97,5 +97,12 @@ Operations:
 Deployment command:
 
 ```bash
-fn routes create videobox /bucket-cleaner --image $FN_REGISTRY/bucket-cleaner:0.0.3 --format json --type async --timeout 360 --idle-timeout 10 --memory 256
+fn routes create videobox /bucket-cleaner --image $FN_REGISTRY/bucket-cleaner:0.0.4 --format json --type async --timeout 360 --idle-timeout 10 --memory 256
+```
+
+
+## Deploy them all
+
+```bash
+fn -v deploy --all --registry `whoami`
 ```

@@ -1,5 +1,5 @@
 name: object_detect
-version: 0.0.9
+version: 0.0.10
 runtime: python3.6
 type: async
 memory: 512
