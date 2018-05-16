@@ -8,4 +8,5 @@ type RequestPayload struct {
 	Dimensions             map[string]int64 `json:"dimensions"`
 	FramesPerSecond        int64            `json:"frames_per_second"`
 	S3Endpoint             string           `json:"s3_endpoint"`
+	Codec                  string           `json:"codec"`
 }

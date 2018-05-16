@@ -22,10 +22,15 @@ func doAssemble(p *RequestPayload, frameMap [][]gocv.Mat) (*string, error) {
 		width = 1240
 	}
 
+	codec := p.Codec
+	if codec == "" {
+		codec = "MP4V"
+	}
+
 	fName := fmt.Sprintf("%s-%s.mp4", p.OriginalObjectKey, p.Bucket)
 	logrus.Infof("Dimensions: %d(width) x %d(height)", width, height)
 	finalVideo, err := gocv.VideoWriterFile(
-		fName, "MP4V", float64(fps), int(width), int(height))
+		fName, codec, float64(fps), int(width), int(height))
 	if err != nil {
 		return nil, err
 	}
