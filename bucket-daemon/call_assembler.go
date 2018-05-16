@@ -44,6 +44,7 @@ func callAssembler(fctx *fdk.Ctx, store *api.Store, requestPayload *RequestPaylo
 		FramesPerSecond:        requestPayload.FramesPerSecond,
 		S3Endpoint:             requestPayload.S3Endpoint,
 		OriginalObjectKey:      requestPayload.OriginalObjectKey,
+		Codec:                  requestPayload.Codec,
 	}
 	err = json.NewEncoder(buf).Encode(rP)
 	if err != nil {
