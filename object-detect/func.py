@@ -198,7 +198,7 @@ def with_graph(label_map):
         object_del_collection = []
         range_index = frames.get("range_index", 0)
         video_segment_url = frames.get("video_segment_url")
-
+        original_video_codec = frames.get("codec")
         height, width = 768, 1024
         for frame in frames.get("frames", []):
             media_url = frame.get("get_object_url")
@@ -224,7 +224,8 @@ def with_graph(label_map):
             "dimensions": {
                 "height": height,
                 "width": width,
-            }
+            },
+            "codec": original_video_codec,
         }
         assemble_video_segment(ctx, fn_api_url, body)
 

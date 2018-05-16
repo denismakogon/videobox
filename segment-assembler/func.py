@@ -40,9 +40,9 @@ def get_logger(ctx):
 
 
 # todo: make this go in parallel to speed it up
-def assemble_frames(video_path, list_of_image_urls, size):
+def assemble_frames(video_path, list_of_image_urls, size, codec):
     video = cv.VideoWriter(
-        video_path, cv.VideoWriter_fourcc(*'MP4V'),
+        video_path, cv.VideoWriter_fourcc(*codec.upper()),
         len(list_of_image_urls), size
     )
     for media_url in list_of_image_urls:
@@ -74,13 +74,15 @@ def handler(ctx, data=None, loop=None):
     video_segment_url = body.get("video_segment_url")
     dimensions = body.get("dimensions")
     size = (dimensions.get("width"), dimensions.get("height"))
+    original_video_codec = body.get("codec", "mp4v")
 
     log.info("incoming request parsed")
     video_path = "{0}.mp4".format(range_index)
     assemble_frames(
         video_path,
         get_urls,
-        size
+        size,
+        original_video_codec,
     )
     log.info("video assembled")
     if int(os.environ.get("KEEP_IMAGES")) == 0:

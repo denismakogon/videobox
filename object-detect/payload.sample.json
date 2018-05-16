@@ -9,5 +9,6 @@
      ],
   "bucket": "s3-bucket",
   "range_index": 10,
-  "video_segment_url": "https://..."
+  "video_segment_url": "https://...",
+  "codec": "avc1"
 }

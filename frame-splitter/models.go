@@ -13,12 +13,13 @@ type Frame struct {
 	DelObjectURL string `json:"del_object_url"`
 }
 
-type Frames struct {
+type ObjectDetectPayload struct {
 	Frames          []Frame `json:"frames"`
 	Bucket          string  `json:"bucket"`
 	Range           *Range  `json:"range"`
 	RangeIndex      int64   `json:"range_index"`
 	VideoSegmentURL string  `json:"video_segment_url"`
+	Codec           string  `json:"codec"`
 }
 
 type Range struct {
@@ -38,4 +39,5 @@ type BucketDaemonPayload struct {
 	OriginalObjectKey string           `json:"original_object_key"`
 	Dimensions        map[string]int64 `json:"dimensions"`
 	FramesPerSecond   int64            `json:"frames_per_second"`
+	Codec             string           `json:"codec"`
 }

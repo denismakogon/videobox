@@ -10,5 +10,6 @@
     "width": 1240
   },
   "frames_per_second": 25,
-  "s3_endpoint":"s3://admin:password@s3/us-east-1/videobox"
+  "s3_endpoint":"s3://admin:password@s3/us-east-1/videobox",
+  "codec": "avc1"
 }

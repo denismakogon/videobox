@@ -7,6 +7,7 @@ type RequestPayload struct {
 	OriginalObjectKey string           `json:"original_object_key"`
 	Dimensions        map[string]int64 `json:"dimensions"`
 	FramesPerSecond   int64            `json:"frames_per_second"`
+	Codec             string           `json:"codec"`
 }
 
 type SegmentsAssemblerPayload struct {
@@ -17,4 +18,5 @@ type SegmentsAssemblerPayload struct {
 	Dimensions             map[string]int64 `json:"dimensions"`
 	FramesPerSecond        int64            `json:"frames_per_second"`
 	S3Endpoint             string           `json:"s3_endpoint"`
+	Codec                  string           `json:"codec"`
 }

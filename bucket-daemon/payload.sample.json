@@ -7,5 +7,6 @@
     "height": 720,
     "width": 1280
   },
-  "frames_per_second": 30
+  "frames_per_second": 30,
+  "codec": "avc1"
 }
