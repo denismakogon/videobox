@@ -36,6 +36,7 @@ func doAssemble(p *RequestPayload, frameMap [][]gocv.Mat) (*string, error) {
 	}
 	defer finalVideo.Close()
 
+	logrus.Infof("got images with No. channels: %d", frameMap[0][0].Channels())
 	for _, videoFrames := range frameMap {
 		for _, frame := range videoFrames {
 			err := finalVideo.Write(frame)
