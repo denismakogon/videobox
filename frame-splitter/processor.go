@@ -111,9 +111,9 @@ func setupFrameInStore(ctx context.Context, s *api.Store, img image.Image,
 }
 
 func readFrameAndDispatch(ctx context.Context, s *api.Store,
-	rangedFrames *RangedFrames, tempBucket string, rangeIndex int64) error {
+	rangedFrames *RangedFrames, tempBucket string, rangeIndex int64, codec string) error {
 	log := logrus.New()
-	ff := &Frames{}
+	ff := &ObjectDetectPayload{}
 	var tempFrames []Frame
 
 	for i, frame := range rangedFrames.Frames {
@@ -149,11 +149,12 @@ func readFrameAndDispatch(ctx context.Context, s *api.Store,
 	ff.Frames = tempFrames
 	ff.Bucket = tempBucket
 	ff.Range = rangedFrames.Range
+	ff.Codec = codec
 
 	return callObjectDetect(ctx, ff)
 }
 
-func callObjectDetect(ctx context.Context, ff *Frames) error {
+func callObjectDetect(ctx context.Context, ff *ObjectDetectPayload) error {
 	fctx := fdk.Context(ctx)
 	u, _ := url.Parse(fctx.RequestURL)
 	fnAPIURL := fctx.RequestURL[:len(fctx.RequestURL)-len(u.EscapedPath())]
@@ -259,7 +260,7 @@ func SplitFrames(ctx context.Context, s *api.Store, filePath, tempBucket, origin
 			defer wg.Done()
 			log.Infof("image posting to S3 round: %d with range: [%d:%d]",
 				index, rfs.Range.Start, rfs.Range.Stop)
-			err := readFrameAndDispatch(ctx, s, rfs, tempBucket, index)
+			err := readFrameAndDispatch(ctx, s, rfs, tempBucket, index, codecFromFourCC(video))
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -275,11 +276,11 @@ func SplitFrames(ctx context.Context, s *api.Store, filePath, tempBucket, origin
 	wg.Wait()
 
 	return callBucketDaemon(ctx, s.Config.RawEndpoint, tempBucket, originalObjectKey,
-		iterations, fps, videoHeight, videoWidth)
+		iterations, fps, videoHeight, videoWidth, codecFromFourCC(video))
 }
 
 func callBucketDaemon(ctx context.Context, s3Endpoint, tempBucket, originalObjectKey string,
-	rangeNumber, fps, videoHeight, videoWidth int64) error {
+	rangeNumber, fps, videoHeight, videoWidth int64, codec string) error {
 
 	bucketDaemonPayload := BucketDaemonPayload{
 		Bucket:      tempBucket,
@@ -291,6 +292,7 @@ func callBucketDaemon(ctx context.Context, s3Endpoint, tempBucket, originalObjec
 		},
 		FramesPerSecond:   fps,
 		OriginalObjectKey: originalObjectKey,
+		Codec:             codec,
 	}
 
 	var buf bytes.Buffer
