@@ -1,5 +1,5 @@
 name: frame-splitter
-version: 0.0.33
+version: 0.0.34
 runtime: go
 entrypoint: ./func
 type: async
