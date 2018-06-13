@@ -37,10 +37,11 @@ func SaveFile(ctx context.Context, s *api.Store, video *common.RequestPayload) (
 
 	prefix := uuid.New().String()
 	tempFile, err := ioutil.TempFile(os.TempDir(), fmt.Sprintf("%s%s", prefix, filepath.Ext(video.Object)))
-	logrus.Info("saving file to: ", tempFile.Name())
 	if err != nil {
 		return nil, nil, err
 	}
+
+	logrus.Info("saving file to: ", tempFile.Name())
 	defer tempFile.Close()
 	logrus.Info("setting up S3 connection")
 	_, err = s.Downloader.DownloadWithContext(

@@ -17,7 +17,7 @@ Operations:
 Deployment command:
 
 ```bash
-fn routes create videobox /frame-splitter --image $FN_REGISTRY/frame-splitter:0.0.32 --format json --type async --timeout 3600 --idle-timeout 10 --memory 1000
+fn routes create videobox /frame-splitter --image $FN_REGISTRY/frame-splitter:0.0.34 --format json --type async --timeout 3600 --idle-timeout 10 --memory 1000
 fn routes config set videobox /frame-splitter NEXT_FUNC /object-detect
 ```
 
