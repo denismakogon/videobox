@@ -74,7 +74,9 @@ def handler(ctx, data=None, loop=None):
     video_segment_url = body.get("video_segment_url")
     dimensions = body.get("dimensions")
     size = (dimensions.get("width"), dimensions.get("height"))
-    original_video_codec = body.get("codec", "mp4v")
+
+    # TODO: disable until newer base images with fully-functioning ffmpeg
+    original_video_codec = "mp4v" # body.get("codec", "mp4v")
 
     log.info("incoming request parsed")
     video_path = "{0}.mp4".format(range_index)

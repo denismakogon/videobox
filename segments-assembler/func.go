@@ -46,7 +46,7 @@ func myHandler(ctx context.Context, in io.Reader, _ io.Writer) error {
 	var wg sync.WaitGroup
 	wg.Add(len(p.PreSignedURLs))
 
-	fileMap := make(map[int]string, len(p.PreSignedURLs))
+	var fMap sync.Map
 
 	for index, mediaURL := range p.PreSignedURLs {
 		go func(wg *sync.WaitGroup, index int, mediaURL string) {
@@ -55,19 +55,21 @@ func myHandler(ctx context.Context, in io.Reader, _ io.Writer) error {
 			if err != nil {
 				log.Fatal(err.Error())
 			}
-			fileMap[index] = *videoFile
+			fMap.Store(index, *videoFile)
 		}(&wg, index, mediaURL)
 	}
 	wg.Wait()
 
-	for index, videoFile := range fileMap {
-		frames, err := videoToFrames(videoFile)
-		if err != nil {
-			log.Fatal(err.Error())
-		}
+	fMap.Range(
+		func(index, videoFile interface{}) bool {
+			frames, err := videoToFrames(videoFile.(string))
+			if err != nil {
+				log.Fatal(err.Error())
+			}
+			frameMap[index.(int)] = frames
+			return true
 
-		frameMap[index] = frames
-	}
+		})
 
 	log.Info("all videos downloaded and parsed to frames")
 	fName, err := doAssemble(&p, frameMap)

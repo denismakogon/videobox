@@ -22,10 +22,12 @@ func doAssemble(p *RequestPayload, frameMap [][]gocv.Mat) (*string, error) {
 		width = 1240
 	}
 
-	codec := p.Codec
-	if codec == "" {
-		codec = "MP4V"
-	}
+	//codec := p.Codec
+	//if codec == "" {
+	//	codec = "MP4V"
+	//}
+	// TODO: disable until newer base images with fully-functioning ffmpeg
+	codec := "MP4V"
 
 	fName := fmt.Sprintf("%s-%s.mp4", p.OriginalObjectKey, p.Bucket)
 	logrus.Infof("Dimensions: %d(width) x %d(height)", width, height)
