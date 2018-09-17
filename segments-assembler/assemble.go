@@ -29,7 +29,7 @@ func doAssemble(p *RequestPayload, frameMap [][]gocv.Mat) (*string, error) {
 	// TODO: disable until newer base images with fully-functioning ffmpeg
 	codec := "MP4V"
 
-	fName := fmt.Sprintf("%s-%s.mp4", p.OriginalObjectKey, p.Bucket)
+	fName := fmt.Sprintf("/tmp/%s-%s.mp4", p.OriginalObjectKey, p.Bucket)
 	logrus.Infof("Dimensions: %d(width) x %d(height)", width, height)
 	finalVideo, err := gocv.VideoWriterFile(
 		fName, codec, float64(fps), int(width), int(height))

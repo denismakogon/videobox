@@ -1,12 +1,11 @@
 name: bucket-daemon
-version: 0.0.5
+version: 0.0.9
 runtime: go
 entrypoint: ./func
 type: async
 memory: 256
 format: json
 timeout: 3600
-path: /bucket-daemon
 config:
   BACKOFF_TIME: "5"
   NEXT_FUNC: /segments-assembler

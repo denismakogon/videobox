@@ -12,6 +12,7 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
+import skvideo.io
 import fdk
 import numpy as np
 import cv2 as cv
@@ -41,10 +42,8 @@ def get_logger(ctx):
 
 # todo: make this go in parallel to speed it up
 def assemble_frames(video_path, list_of_image_urls, size, codec):
-    video = cv.VideoWriter(
-        video_path, cv.VideoWriter_fourcc(*codec.upper()),
-        len(list_of_image_urls), size
-    )
+    video = skvideo.io.FFmpegWriter(video_path)
+
     for media_url in list_of_image_urls:
         resp = requests.get(media_url)
         resp.raise_for_status()
@@ -52,9 +51,8 @@ def assemble_frames(video_path, list_of_image_urls, size, codec):
             np.array(bytearray(resp.content), dtype=np.uint8),
             cv.COLOR_GRAY2BGR
         )
-        video.write(img)
-
-    video.release()
+        video.writeFrame(img)
+    video.close()
 
 
 # todo: make this go in parallel to speed it up
@@ -79,7 +77,7 @@ def handler(ctx, data=None, loop=None):
     original_video_codec = "mp4v" # body.get("codec", "mp4v")
 
     log.info("incoming request parsed")
-    video_path = "{0}.mp4".format(range_index)
+    video_path = "/tmp/{0}.mp4".format(range_index)
     assemble_frames(
         video_path,
         get_urls,

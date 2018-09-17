@@ -1,12 +1,11 @@
 name: segment-assembler
-version: 0.0.22
+version: 0.0.30
 runtime: python
 entrypoint: python3 func.py
 type: async
 memory: 400
 format: json
 timeout: 300
-path: /segment-assembler
 config:
   KEEP_IMAGES: "0"
 idle_timeout: 20

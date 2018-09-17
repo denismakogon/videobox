@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: minio
-  namespace: denismakogon-minio-cluster
+  namespace: minio
   labels:
     app: minio
 spec:
@@ -17,7 +17,7 @@ apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
   name: minio
-  namespace: denismakogon-minio-cluster
+  namespace: minio
 spec:
   serviceName: minio
   replicas: 4
@@ -36,10 +36,10 @@ spec:
         image: minio/minio
         args:
         - server
-        - http://minio-0.minio.denismakogon-minio-cluster.svc.cluster.local/data
-        - http://minio-1.minio.denismakogon-minio-cluster.svc.cluster.local/data
-        - http://minio-2.minio.denismakogon-minio-cluster.svc.cluster.local/data
-        - http://minio-3.minio.denismakogon-minio-cluster.svc.cluster.local/data
+        - http://minio-0.minio.minio.svc.cluster.local/data
+        - http://minio-1.minio.minio.svc.cluster.local/data
+        - http://minio-2.minio.minio.svc.cluster.local/data
+        - http://minio-3.minio.minio.svc.cluster.local/data
         ports:
         - containerPort: 9000
 ---
@@ -47,7 +47,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: minio-service
-  namespace: denismakogon-minio-cluster
+  namespace: minio
   annotations:
     service.beta.kubernetes.io/oci-load-balancer-shape: "400Mbps"
 spec:

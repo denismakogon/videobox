@@ -1,12 +1,11 @@
 name: object_detect
-version: 0.0.11
+version: 0.0.16
 runtime: python3.6
 type: async
 memory: 512
 format: json
 timeout: 3000
-path: /object-detect
 config:
   DETECT_PRECISION: "0.4"
-  NEXT_FUNC: /segment-assembler
+  NEXT_FUNC: /segment-assembler-sickit
 idle_timeout: 20
